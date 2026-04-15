@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Validasi Kartu Kredit</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            background: white;
+            padding: 40px;
+            width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 12px;
+            width: 90%;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #667eea;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        #hasil {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>💳 Validasi Kartu Kredit</h2>
+
+    <input type="text" id="card" placeholder="Masukkan nomor kartu">
+    <br>
+    <button onclick="cekKartu()">Cek</button>
+
+    <p id="hasil"></p>
+</div>
+
+<script>
+function validasiKartu(number) {
+    number = number.replace(/\s/g, "").split("").reverse();
+    let sum = 0;
+
+    for (let i = 0; i < number.length; i++) {
+        let digit = parseInt(number[i]);
+
+        if (i % 2 === 1) {
+            digit *= 2;
+            if (digit > 9) digit -= 9;
+        }
+
+        sum += digit;
+    }
+
+    return sum % 10 === 0;
+}
+
+function cekKartu() {
+    let card = document.getElementById("card").value;
+    let hasil = document.getElementById("hasil");
+
+    if (!/^\d+$/.test(card.replace(/\s/g, ""))) {
+        hasil.innerHTML = "⚠️ Input harus angka!";
+        hasil.style.color = "orange";
+        return;
+    }
+
+    if (validasiKartu(card)) {
+        hasil.innerHTML = "✅ Kartu VALID";
+        hasil.style.color = "green";
+    } else {
+        hasil.innerHTML = "❌ Kartu TIDAK VALID";
+        hasil.style.color = "red";
+    }
+}
+</script>
+
+</body>
+</html>
